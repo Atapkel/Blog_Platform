@@ -1,0 +1,13 @@
+.git
+.gitignore
+.env
+*.pyc
+__pycache__
+.pytest_cache
+media/post_images
+static/*
+*.sqlite3
+../.idea
+*.md
+docker-compose*.yml
+../Dockerfile
