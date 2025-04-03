@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Post Detail - PixelPost{% endblock %}
+
+{% block content %}
+<div class="container">
+    <article class="post-detail">
+        <div class="post-detail-header">
+            <h1>{{ post.title }}</h1>
+
+            <div class="post-detail-meta">
+                <div class="post-detail-author">
+                    <img src="{{ post.author.profile_picture.url }}" alt="{{ post.author.username }}">
+                    <div>
+                        <div class="post-detail-author-name">{{ post.author.username }}</div>
+                        <div class="post-detail-date">Posted {{ post.created_at|timesince }} ago</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="post-detail-image">
+            <img src="{{ post.image.url }}" alt="Post image">
+        </div>
+
+        <div class="post-detail-content">
+            <p>{{ post.content }}</p>
+        </div>
+
+        <div class="comments-section">
+            <h3>Comments ({{ post.comments.count }})</h3>
+
+            <div class="comment-form">
+                {% if user.is_authenticated %}
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="comment">{{ comment_form.content.label }}</label>
+                            {{ comment_form.content }}
+                        </div>
+                        <button type="submit" class="btn">Post Comment</button>
+                    </form>
+                {% else %}
+                    <p><a href="{% url 'login' %}">Login</a> to leave a comment.</p>
+                {% endif %}
+            </div>
+
+            <div class="comments-list">
+                {% for comment in post.comments.all %}
+                    <div class="comment">
+                        <div class="comment-meta">
+                            <img src="{{ comment.author.profile_picture.url }}" alt="Commenter"
+                                 style="width: 2rem; height: 2rem; border-radius: 50%;">
+                            <div class="comment-author">{{ comment.author.username }}</div>
+                            <div class="comment-date">{{ comment.created_at|timesince }} ago</div>
+                        </div>
+                        <div class="comment-content">
+                            <p>{{ comment.content }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </article>
+</div>
+{% endblock %}

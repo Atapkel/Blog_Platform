@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Login - PixelPost{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <div class="form-header">
+        <h2>Login</h2>
+        <p>Enter your credentials to access your account</p>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn" style="width: 100%;">Login</button>
+    </form>
+
+    <div class="form-footer">
+        <p>Don't have an account? <a href="{% url 'register' %}" style="color: var(--pixel-purple);">Register</a></p>
+        <div style="margin-top: 1.5rem; text-align: center;">
+            <p>Demo credentials:</p>
+            <code style="display: inline-block; background: var(--secondary); padding: 0.5rem; border-radius: 4px; margin-top: 0.5rem; font-size: 0.875rem;">
+                Username: pixelartist<br>
+                Password: password
+            </code>
+        </div>
+    </div>
+</div>
+{% endblock %}

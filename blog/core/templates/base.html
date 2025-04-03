@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}PixelPost{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'styles/style.css' %}">
+</head>
+<body>
+<header class="header">
+    <div class="container">
+        <div class="logo">
+            <a href="{% url 'index' %}">Pixel<span>Post</span></a>
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="{% url 'index' %}">Home</a></li>
+                <li><a href="{% url 'create' %}">Create Post</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'logout' %}" class="btn btn-outline">Logout</a></li>
+                    <li><span>Hi, {{ user.username }}</span></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}" class="btn btn-outline">Login</a></li>
+                    <li><a href="{% url 'register' %}" class="btn">Register</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+    {% block content %} {% endblock %}
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-about">
+                <h3>Pixel<span>Post</span></h3>
+                <p>A community platform for pixel art enthusiasts to share their work.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Links</h4>
+                <ul>
+                    <li><a href="{% url 'index' %}">Home</a></li>
+                    <li><a href="{% url 'create' %}">Create Post</a></li>
+                    {% if not user.is_authenticated %}
+                        <li><a href="{% url 'login' %}">Login</a></li>
+                        <li><a href="{% url 'register' %}">Register</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
