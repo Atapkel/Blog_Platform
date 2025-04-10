@@ -13,8 +13,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
-#      minio:
-#        condition: service_healthy
+      minio:
+        condition: service_healthy
     env_file:
       - .env.prod
     networks:
@@ -48,28 +48,28 @@ services:
     networks:
       - practice-network
 
-#  minio:
-#    image: minio/minio
-#    command: server /data --console-address ":9001"
-#    environment:
-#      MINIO_ROOT_USER: minioadmin
-#      MINIO_ROOT_PASSWORD: minioadmin
-#    ports:
-#      - "9000:9000"
-#      - "9001:9001"
-#    volumes:
-#      - ./minio_data:/data
-#    healthcheck:
-#      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
-#      interval: 5s
-#      timeout: 5s
-#      retries: 5
-#    networks:
-#      - practice-network
+  minio:
+    image: minio/minio
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - ./minio_data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - practice-network
 
 volumes:
   postgres_data:
-#  minio_data:
+  minio_data:
 
 networks:
   practice-network:

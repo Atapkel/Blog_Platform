@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core',
+    # 'minio-storage',
 ]
 
 MIDDLEWARE = [
@@ -111,8 +112,23 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
-MEDIA_URL = '/media/'
+# MEDIA_URL = '/media/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+MINIO_STORAGE_ENDPOINT = 'minio:9000'
+MINIO_STORAGE_ACCESS_KEY = 'minioadmin'
+MINIO_STORAGE_SECRET_KEY = 'minioadmin'
+MINIO_STORAGE_USE_HTTPS = False
+MINIO_STORAGE_MEDIA_BUCKET_NAME = 'media'
+MINIO_STORAGE_AUTO_CREATE_MEDIA_BUCKET = True
+MINIO_STORAGE_MEDIA_URL = 'http://127.0.0.1:9000/media'
+
+# Set the default file storage backend
+DEFAULT_FILE_STORAGE = 'minio_storage.storage.MinioMediaStorage'
+
+# Media settings
+MEDIA_URL = 'http://localhost:9000/media/'

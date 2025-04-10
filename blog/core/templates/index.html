@@ -18,6 +18,8 @@
           <article class="post-card">
             <a href="{% url 'detail' post.pk %}">
               <div class="post-image">
+{#                  <img src="http://127.0.0.1:9000/media/post_images/Screenshot_2025-03-31_115319.png" alt="">#}
+                  <p>{{ post.image.url }}</p>
                 <img src="{{ post.image.url }}" alt="{{ post.title }}">
               </div>
             </a>
