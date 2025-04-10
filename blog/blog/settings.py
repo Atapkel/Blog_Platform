@@ -18,6 +18,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core',
+    'reviews',
+    'rest_framework',
     # 'minio-storage',
 ]
 
@@ -79,9 +81,11 @@ USE_TZ = True
 # settings.py
 
 # Static files (CSS, JS, etc.)
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']          # where you keep your source static assets
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_URL = 'http://localhost:8080/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+
 
 # Media files
 MEDIA_ROOT = BASE_DIR / 'media'
