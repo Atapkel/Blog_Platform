@@ -1,23 +1,15 @@
-from pathlib import Path
 import os
+from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-# if os.environ.get('DEBUG') == 'False':
-#     DEBUG = False
-
-ALLOWED_HOSTS = ['web', 'localhost', '127.0.0.1']
+# Security
+SECRET_KEY = os.getenv('SECRET_KEY', 'secret')
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -59,76 +51,50 @@ TEMPLATES = [
 WSGI_APPLICATION = 'blog.wsgi.application'
 
 # Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'practice',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'db',
-        'PORT': 5432,
+        'NAME': os.getenv('DATABASE_NAME', 'practice'),
+        'USER': os.getenv('DATABASE_USER', 'postgres'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD', 'postgres'),
+        'HOST': os.getenv('DATABASE_HOST', 'db'),
+        'PORT': os.getenv('DATABASE_PORT', 5432),
     }
 }
 
 # Password validation
-# https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
 # Internationalization
-# https://docs.djangoproject.com/en/5.2/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
+# settings.py
 
+# Static files (CSS, JS, etc.)
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [BASE_DIR / 'static']          # where you keep your source static assets
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# MEDIA_URL = '/media/'
+# Media files
 MEDIA_ROOT = BASE_DIR / 'media'
-# MEDIA_URL = '/media/'
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
+MEDIA_URL = '/media/'
 
+# Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
-MINIO_STORAGE_ENDPOINT = 'minio:9000'
-MINIO_STORAGE_ACCESS_KEY = 'minioadmin'
-MINIO_STORAGE_SECRET_KEY = 'minioadmin'
+# MinIO Storage Config
+MINIO_STORAGE_ENDPOINT = os.getenv('MINIO_STORAGE_ENDPOINT', 'minio:9000')
+MINIO_STORAGE_ACCESS_KEY = os.getenv('MINIO_STORAGE_ACCESS_KEY', 'minioadmin')
+MINIO_STORAGE_SECRET_KEY = os.getenv('MINIO_STORAGE_SECRET_KEY', 'minioadmin')
+MINIO_STORAGE_MEDIA_BUCKET_NAME = os.getenv('MINIO_STORAGE_MEDIA_BUCKET_NAME', 'media')
+MINIO_STORAGE_MEDIA_URL = os.getenv('MINIO_STORAGE_MEDIA_URL', 'http://127.0.0.1:9000/media')
 MINIO_STORAGE_USE_HTTPS = False
-MINIO_STORAGE_MEDIA_BUCKET_NAME = 'media'
-MINIO_STORAGE_AUTO_CREATE_MEDIA_BUCKET = True
-MINIO_STORAGE_MEDIA_URL = 'http://127.0.0.1:9000/media'
-
-# Set the default file storage backend
 DEFAULT_FILE_STORAGE = 'minio_storage.storage.MinioMediaStorage'
-
-# Media settings
-MEDIA_URL = 'http://localhost:9000/media/'
