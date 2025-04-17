@@ -4,6 +4,7 @@ services:
   web:
     build: .
     command: bash -c "python manage.py migrate &&
+      python manage.py create_minio_bucket &&
       python manage.py collectstatic --noinput &&
       python manage.py runserver 0.0.0.0:8000"
     expose:
@@ -66,13 +67,13 @@ services:
       - "9001:9001"
     volumes:
       - ./minio_data:/data
+    networks:
+      - practice-network
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
       interval: 5s
       timeout: 5s
       retries: 5
-    networks:
-      - practice-network
 
 volumes:
   postgres_data:

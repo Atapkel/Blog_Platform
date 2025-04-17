@@ -4,46 +4,47 @@
 {% block title %}PixelPost - Share Your Pixel Art{% endblock %}
 
 {% block content %}
-  <section class="hero">
-    <div class="container">
-      <h1>Pixel<span>Post</span></h1>
-      <p>Share your pixel art, retro games, and digital creations with the community<span class="cursor">|</span></p>
-    </div>
-  </section>
+    <section class="hero">
+        <div class="container">
+            <h1>Pixel<span>Post</span></h1>
+            <p>Share your pixel art, retro games, and digital creations with the community<span class="cursor">|</span>
+            </p>
+        </div>
+    </section>
 
-  <section class="posts-grid">
-    <div class="container">
-      <div class="posts">
-        {% for post in posts %}
-          <article class="post-card">
-            <a href="{% url 'detail' post.pk %}">
-              <div class="post-image">
-{#                  <img src="http://127.0.0.1:9000/media/post_images/Screenshot_2025-03-31_115319.png" alt="">#}
-{#                  <p>{{ post.image.url }}</p>#}
-                <img src="{{ post.image.url }}" alt="{{ post.title }}">
-              </div>
-            </a>
-            <div class="post-content">
-              <a href="{% url 'detail' post.pk %}">
-                <h2>{{ post.title }}</h2>
-              </a>
-              <p>{{ post.content|truncatewords:20 }}</p>
-              <div class="post-meta">
-                <div class="post-author">
-                  <img src="https://via.placeholder.com/40" alt="{{ post.author.username }}">
-                  <span>{{ post.author.username }}</span>
-                </div>
-                <div class="post-info">
-                  <span class="post-date">{{ post.created_at|timesince }} ago</span>
-                  <span class="post-comments">{{ post.comments.count }} comments</span>
-                </div>
-              </div>
+    <section class="posts-grid">
+        <div class="container">
+            <div class="posts">
+                {% for post in posts %}
+                    <article class="post-card">
+                        <a href="{% url 'detail' post.pk %}">
+                            <div class="post-image">
+                                {#                  <img src="http://127.0.0.1:9000/media/post_images/Screenshot_2025-03-31_115319.png" alt="">#}
+                                {#                  <p>{{ post.image.url }}</p>#}
+                                <img src="http://localhost:9000{{ post.image_path }}" alt="Post image">
+                            </div>
+                        </a>
+                        <div class="post-content">
+                            <a href="{% url 'detail' post.pk %}">
+                                <h2>{{ post.title }}</h2>
+                            </a>
+                            <p>{{ post.content|truncatewords:20 }}</p>
+                            <div class="post-meta">
+                                <div class="post-author">
+                                    <img src="https://via.placeholder.com/40" alt="{{ post.author.username }}">
+                                    <span>{{ post.author.username }}</span>
+                                </div>
+                                <div class="post-info">
+                                    <span class="post-date">{{ post.created_at|timesince }} ago</span>
+                                    <span class="post-comments">{{ post.comments.count }} comments</span>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                {% empty %}
+                    <p>No posts yet. <a href="{% url 'create' %}">Be the first to share!</a></p>
+                {% endfor %}
             </div>
-          </article>
-        {% empty %}
-          <p>No posts yet. <a href="{% url 'create' %}">Be the first to share!</a></p>
-        {% endfor %}
-      </div>
-    </div>
-  </section>
+        </div>
+    </section>
 {% endblock %}
