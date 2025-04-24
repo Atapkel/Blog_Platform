@@ -42,7 +42,7 @@ class PostDetailView(DetailView):
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     template_name = 'create_post.html'
-    fields = ['title', 'image', 'content']
+    fields = ['title', 'image', 'content', 'category']
     success_url = reverse_lazy('index')
 
     def form_valid(self, form):

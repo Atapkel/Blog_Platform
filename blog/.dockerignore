@@ -11,3 +11,4 @@ static/*
 *.md
 docker-compose*.yml
 ../Dockerfile
+models.dot

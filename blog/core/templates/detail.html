@@ -8,10 +8,11 @@
         <article class="post-detail">
             <div class="post-detail-header">
                 <h1>{{ post.title }}</h1>
-
+                <h2> Category: {{ post.category }}</h2>
+                <br>
                 <div class="post-detail-meta">
                     <div class="post-detail-author">
-                        <img src="{{ post.author.profile_picture.url }}" alt="{{ post.author.username }}">
+                        <img src="{{ post.author.profile_picture.url }}" alt="{{ post.author_name }}">
                         <div>
                             <div class="post-detail-author-name">{{ post.author.username }}</div>
                             <div class="post-detail-date">Posted {{ post.created_at|timesince }} ago</div>

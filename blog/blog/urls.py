@@ -9,6 +9,7 @@ urlpatterns = [
     path('', include('core.urls')),
     path('reviews/', include('reviews.urls')),
     path('api/', include('api.urls')),
+    path('silk/',include('silk.urls', namespace='silk')),
 ]
 
 # if settings.DEBUG:

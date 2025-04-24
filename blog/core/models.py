@@ -3,11 +3,23 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from .media_storage import MediaStorage
 from urllib.parse import urlparse
+
+
 class Post(models.Model):
+    class CategoryChoices(models.TextChoices):
+        TECH = 'Technology'
+        LIFE = 'Lifestyle'
+        EDU = 'Education'
+        OTHER = 'Other'
+
     title = models.CharField(max_length=255)
     image = models.ImageField(upload_to='post_images/', storage=MediaStorage())
     content = models.TextField()
     author = models.ForeignKey(User, on_delete=models.CASCADE)
+    category = models.CharField(max_length=10,
+                                choices=CategoryChoices.choices,
+                                default=CategoryChoices.OTHER
+                                )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -18,8 +30,13 @@ class Post(models.Model):
     def image_path(self):
         return urlparse(self.image.url).path
 
+    @property
+    def author_name(self):
+        return self.author.get_full_name() or self.author.username
+
     def get_absolute_url(self):
         return reverse('detail', kwargs={'pk': self.pk})
+
 
 class Comment(models.Model):
     post = models.ForeignKey('Post', on_delete=models.CASCADE, related_name='comments')
