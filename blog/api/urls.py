@@ -8,7 +8,7 @@ urlpatterns = [
     path('commment/<int:pk>', views.CommentRetrieveUpdateDestroyView.as_view(), name='comment-detail'),
     path('posts/<int:post_id>/comments/', views.PostCommentListView.as_view(), name='post-comments'),
     path('api-token-auth/', v.obtain_auth_token),
-    path('info/', views.info)
+    path('info/', views.InfoAPIView.as_view())
 
 ]
 

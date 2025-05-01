@@ -13,7 +13,7 @@ class Post(models.Model):
         OTHER = 'Other'
 
     title = models.CharField(max_length=255)
-    image = models.ImageField(upload_to='post_images/', storage=MediaStorage())
+    image = models.ImageField(upload_to='post_images/', storage=MediaStorage(), null=True, blank=True)
     content = models.TextField()
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.CharField(max_length=10,
@@ -26,9 +26,15 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+    # @property
+    # def image_path(self):
+    #     return urlparse(self.image.url).path
+
     @property
     def image_path(self):
-        return urlparse(self.image.url).path
+        if self.image and hasattr(self.image, 'url'):
+            return urlparse(self.image.url).path
+        return None
 
     @property
     def author_name(self):

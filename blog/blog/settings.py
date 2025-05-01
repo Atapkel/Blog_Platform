@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     'api',
     'storages',
     'silk',
+    'drf_spectacular',
 
 ]
 
@@ -96,4 +97,18 @@ AWS_S3_FILE_OVERWRITE = False
 AWS_S3_CUSTOM_DOMAIN = 'localhost:9000/media'
 MEDIA_URL = f'http://{AWS_S3_CUSTOM_DOMAIN}/'
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
 
+
+SPECTACULAR_SETTINGS = {
+        'TITLE': 'Your API Project',
+        'DESCRIPTION': 'Documentation for your amazing API',
+        'VERSION': '1.0.0',
+        'SERVE_INCLUDE_SCHEMA': False,
+    }
